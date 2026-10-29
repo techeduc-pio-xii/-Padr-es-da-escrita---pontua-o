@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Trilha da Pontuação - Padrões da Escrita</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Fredoka e Comic Neue -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Estilos do jogo -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Canvas de Confetes da Vitória -->
+    <canvas id="confettiCanvas"></canvas>
+
+    <div class="w-full max-w-4xl flex flex-col items-center">
+        
+        <!-- HEADER PRINCIPAL -->
+        <header class="w-full text-center mb-3">
+            <div class="inline-block bg-[#A2D2FF] doodle-box px-6 py-3 mb-2">
+                <h1 class="text-2xl sm:text-3xl font-extrabold uppercase tracking-wide text-[#1E1E1E] drop-shadow-sm">
+                    ✍️ Trilha da Pontuação
+                </h1>
+            </div>
+            <div>
+                <span class="bg-[#FFDAC1] text-[#1E1E1E] border-2 border-[#1E1E1E] px-3 py-1 rounded-full text-xs sm:text-sm font-bold shadow-[2px_2px_0px_#1E1E1E] inline-block">
+                    BNCC: EF02LP09 • EF03LP07 • EF01COMP01 • EF03COMP01
+                </span>
+            </div>
+        </header>
+
+        <!-- MENU DE NAVEGAÇÃO LIVRE COM 8 ETAPAS -->
+        <nav class="w-full flex justify-center gap-1.5 sm:gap-2 flex-wrap mb-4">
+            <button onclick="switchStep(1)" id="nav-btn-1" class="doodle-btn bg-[#FFB7B2] text-[#1E1E1E] px-2.5 py-1.5 text-xs sm:text-sm font-extrabold shadow-[4px_4px_0px_#1E1E1E]">1. Fácil</button>
+            <button onclick="switchStep(2)" id="nav-btn-2" class="doodle-btn bg-white text-[#1E1E1E] px-2.5 py-1.5 text-xs sm:text-sm">2. Difícil</button>
+            <button onclick="switchStep(3)" id="nav-btn-3" class="doodle-btn bg-white text-[#1E1E1E] px-2.5 py-1.5 text-xs sm:text-sm">3. Card [.]</button>
+            <button onclick="switchStep(4)" id="nav-btn-4" class="doodle-btn bg-white text-[#1E1E1E] px-2.5 py-1.5 text-xs sm:text-sm">4. Card [!]</button>
+            <button onclick="switchStep(5)" id="nav-btn-5" class="doodle-btn bg-white text-[#1E1E1E] px-2.5 py-1.5 text-xs sm:text-sm">5. Card [?]</button>
+            <button onclick="switchStep(6)" id="nav-btn-6" class="doodle-btn bg-white text-[#1E1E1E] px-2.5 py-1.5 text-xs sm:text-sm">6. Memória</button>
+            <button onclick="switchStep(7)" id="nav-btn-7" class="doodle-btn bg-white text-[#1E1E1E] px-2.5 py-1.5 text-xs sm:text-sm">7. Florzinha</button>
+            <button onclick="switchStep(8)" id="nav-btn-8" class="doodle-btn bg-white text-[#1E1E1E] px-2.5 py-1.5 text-xs sm:text-sm font-bold">8. Caça-Palavras 🔍</button>
+        </nav>
+
+        <!-- ETAPA 1: NÍVEL FÁCIL -->
+        <div id="step-1" class="step-container w-full bg-white doodle-box p-4 sm:p-6 flex flex-col items-center">
+            <div class="bg-[#B5EAD7] border-2 border-[#1E1E1E] px-4 py-1.5 rounded-xl font-bold text-base sm:text-lg mb-3 shadow-[3px_3px_0px_#1E1E1E]">
+                1. Nível Fácil: Escolha o Sinal de Pontuação
+            </div>
+            <div class="flex gap-4 font-bold text-sm bg-gray-100 border-2 border-[#1E1E1E] px-4 py-1 rounded-lg mb-3">
+                <span>Frase: <span id="s1-round">1</span>/10</span>
+                <span>•</span>
+                <span>Pontos: <span id="s1-score">0</span></span>
+            </div>
+            <div id="s1-feedback" class="h-7 text-center font-bold text-base sm:text-lg mb-2"></div>
+            
+            <div id="s1-sentence" class="w-full max-w-xl bg-[#FFF8E7] border-3 border-dashed border-[#1E1E1E] rounded-2xl p-6 text-center text-xl sm:text-2xl font-bold mb-6">
+                Que dia bonito_
+            </div>
+
+            <div class="flex justify-center gap-4 mb-4">
+                <button onclick="checkStep1('.')" class="doodle-btn bg-[#A2D2FF] w-16 h-16 sm:w-20 sm:h-20 text-3xl sm:text-4xl flex items-center justify-center">.</button>
+                <button onclick="checkStep1('?')" class="doodle-btn bg-[#A2D2FF] w-16 h-16 sm:w-20 sm:h-20 text-3xl sm:text-4xl flex items-center justify-center">?</button>
+                <button onclick="checkStep1('!')" class="doodle-btn bg-[#A2D2FF] w-16 h-16 sm:w-20 sm:h-20 text-3xl sm:text-4xl flex items-center justify-center">!</button>
+            </div>
+
+            <div class="flex gap-3">
+                <button onclick="initStep1()" class="doodle-btn bg-[#FFDAC1] px-5 py-2.5 text-base">Reiniciar 🔄</button>
+                <button id="s1-next-btn" onclick="switchStep(2)" class="doodle-btn bg-[#B5EAD7] px-5 py-2.5 text-base hidden">Nível Difícil ➡️</button>
+            </div>
+        </div>
+
+        <!-- ETAPA 2: NÍVEL DIFÍCIL -->
+        <div id="step-2" class="step-container w-full bg-white doodle-box p-4 sm:p-6 flex flex-col items-center hidden">
+            <div class="bg-[#FFB7B2] border-2 border-[#1E1E1E] px-4 py-1.5 rounded-xl font-bold text-base sm:text-lg mb-3 shadow-[3px_3px_0px_#1E1E1E]">
+                2. Nível Difícil: Frases Complexas e Diálogos
+            </div>
+            <div class="flex gap-4 font-bold text-sm bg-gray-100 border-2 border-[#1E1E1E] px-4 py-1 rounded-lg mb-3">
+                <span>Frase: <span id="s2-round">1</span>/10</span>
+                <span>•</span>
+                <span>Pontos: <span id="s2-score">0</span></span>
+            </div>
+            <div id="s2-feedback" class="h-7 text-center font-bold text-base sm:text-lg mb-2"></div>
+            
+            <div id="s2-sentence" class="w-full max-w-xl bg-[#FFF8E7] border-3 border-dashed border-[#1E1E1E] rounded-2xl p-6 text-center text-xl sm:text-2xl font-bold mb-6">
+                — Aonde você vai_
+            </div>
+
+            <div class="flex justify-center gap-4 mb-4">
+                <button onclick="checkStep2('.')" class="doodle-btn bg-[#A2D2FF] w-16 h-16 sm:w-20 sm:h-20 text-3xl sm:text-4xl flex items-center justify-center">.</button>
+                <button onclick="checkStep2('?')" class="doodle-btn bg-[#A2D2FF] w-16 h-16 sm:w-20 sm:h-20 text-3xl sm:text-4xl flex items-center justify-center">?</button>
+                <button onclick="checkStep2('!')" class="doodle-btn bg-[#A2D2FF] w-16 h-16 sm:w-20 sm:h-20 text-3xl sm:text-4xl flex items-center justify-center">!</button>
+            </div>
+
+            <div class="flex gap-3">
+                <button onclick="initStep2()" class="doodle-btn bg-[#FFDAC1] px-5 py-2.5 text-base">Reiniciar 🔄</button>
+                <button id="s2-next-btn" onclick="switchStep(3)" class="doodle-btn bg-[#B5EAD7] px-5 py-2.5 text-base hidden">Ver Cards ➡️</button>
+            </div>
+        </div>
+
+        <!-- ETAPA 3: CARD PONTO FINAL -->
+        <div id="step-3" class="step-container w-full bg-white doodle-box p-6 flex flex-col items-center hidden">
+            <div class="w-full max-w-lg bg-[#FFF8E7] border-4 border-[#1E1E1E] rounded-2xl p-6 text-center shadow-[6px_6px_0px_#1E1E1E] mb-6">
+                <div class="w-20 h-20 bg-[#FFDAC1] border-3 border-[#1E1E1E] rounded-full mx-auto flex items-center justify-center text-5xl font-black mb-4 shadow-[3px_3px_0px_#1E1E1E]">.</div>
+                <h2 class="text-2xl font-black mb-2 text-[#1E1E1E]">[ . ] PONTO FINAL</h2>
+                <p class="text-lg font-bold text-gray-800 uppercase leading-relaxed">
+                    INDICA QUE A FRASE TERMINOU.<br>
+                    É USADO EM FRASES DECLARATIVAS OU AFIRMATIVAS EM FINAL DE FRASE.
+                </p>
+            </div>
+            <button onclick="switchStep(4)" class="doodle-btn bg-[#B5EAD7] px-6 py-3 text-lg">Próximo Sinal ➡️</button>
+        </div>
+
+        <!-- ETAPA 4: CARD EXCLAMAÇÃO -->
+        <div id="step-4" class="step-container w-full bg-white doodle-box p-6 flex flex-col items-center hidden">
+            <div class="w-full max-w-lg bg-[#FFF8E7] border-4 border-[#1E1E1E] rounded-2xl p-6 text-center shadow-[6px_6px_0px_#1E1E1E] mb-6">
+                <div class="w-20 h-20 bg-[#FFB7B2] border-3 border-[#1E1E1E] rounded-full mx-auto flex items-center justify-center text-5xl font-black mb-4 shadow-[3px_3px_0px_#1E1E1E]">!</div>
+                <h2 class="text-2xl font-black mb-2 text-[#1E1E1E]">[ ! ] EXCLAMAÇÃO</h2>
+                <p class="text-lg font-bold text-gray-800 uppercase leading-relaxed">
+                    INDICA ADMIRAÇÃO, SURPRESA, ALEGRIA, SUSTO OU ESPANTO!
+                </p>
+            </div>
+            <button onclick="switchStep(5)" class="doodle-btn bg-[#B5EAD7] px-6 py-3 text-lg">Próximo Sinal ➡️</button>
+        </div>
+
+        <!-- ETAPA 5: CARD INTERROGAÇÃO -->
+        <div id="step-5" class="step-container w-full bg-white doodle-box p-6 flex flex-col items-center hidden">
+            <div class="w-full max-w-lg bg-[#FFF8E7] border-4 border-[#1E1E1E] rounded-2xl p-6 text-center shadow-[6px_6px_0px_#1E1E1E] mb-6">
+                <div class="w-20 h-20 bg-[#A2D2FF] border-3 border-[#1E1E1E] rounded-full mx-auto flex items-center justify-center text-5xl font-black mb-4 shadow-[3px_3px_0px_#1E1E1E]">?</div>
+                <h2 class="text-2xl font-black mb-2 text-[#1E1E1E]">[ ? ] INTERROGAÇÃO</h2>
+                <p class="text-lg font-bold text-gray-800 uppercase leading-relaxed">
+                    INDICA QUE ALGUÉM ESTÁ FAZENDO UMA PERGUNTA OU DÚVIDA?
+                </p>
+            </div>
+            <button onclick="switchStep(6)" class="doodle-btn bg-[#B5EAD7] px-6 py-3 text-lg">Jogo da Memória ➡️</button>
+        </div>
+
+        <!-- ETAPA 6: JOGO DA MEMÓRIA -->
+        <div id="step-6" class="step-container w-full bg-white doodle-box p-4 sm:p-6 flex flex-col items-center hidden">
+            <div class="bg-[#A2D2FF] border-2 border-[#1E1E1E] px-4 py-1.5 rounded-xl font-bold text-base sm:text-lg mb-2 shadow-[3px_3px_0px_#1E1E1E]">
+                6. Jogo da Memória dos Sinais
+            </div>
+            <div class="flex gap-4 font-bold text-sm bg-gray-100 border-2 border-[#1E1E1E] px-4 py-1 rounded-lg mb-3">
+                <span>Pares: <span id="mem-matches">0</span>/6</span>
+                <span>•</span>
+                <span>Tentativas: <span id="mem-moves">0</span></span>
+            </div>
+            <div id="mem-feedback" class="h-6 text-center font-bold text-sm sm:text-base text-gray-700 mb-3">
+                Encontre os pares entre o Símbolo e sua Função!
+            </div>
+
+            <div id="mem-grid" class="w-full max-w-2xl grid grid-cols-3 sm:grid-cols-4 gap-2.5 sm:gap-3 mb-4"></div>
+
+            <div class="flex gap-3">
+                <button onclick="initMemoryGame()" class="doodle-btn bg-[#FFDAC1] px-5 py-2.5 text-base">Reiniciar 🔄</button>
+                <button id="mem-next-btn" onclick="switchStep(7)" class="doodle-btn bg-[#B5EAD7] px-5 py-2.5 text-base hidden">Florzinha ➡️</button>
+            </div>
+        </div>
+
+        <!-- ETAPA 7: FORCA DA FLORZINHA DA PONTUAÇÃO -->
+        <div id="step-7" class="step-container w-full bg-white doodle-box p-4 sm:p-6 flex flex-col items-center hidden">
+            <div class="bg-[#FFDAC1] border-2 border-[#1E1E1E] px-4 py-1.5 rounded-xl font-bold text-base sm:text-lg mb-2 shadow-[3px_3px_0px_#1E1E1E]">
+                7. Forca da Florzinha da Pontuação
+            </div>
+            <div class="font-bold text-sm bg-yellow-100 border-2 border-[#1E1E1E] px-4 py-1 rounded-lg mb-2 max-w-md text-center">
+                Dica: <span id="flower-hint">---</span>
+            </div>
+            <div id="flower-feedback" class="h-6 text-center font-bold text-sm sm:text-base mb-2"></div>
+
+            <!-- SVG da Florzinha -->
+            <div class="w-28 h-28 my-2">
+                <svg id="flowerSvg" viewBox="0 0 100 100" class="w-full h-full">
+                    <path d="M50 50 Q 50 85 50 95" stroke="#27AE60" stroke-width="5" fill="none"/>
+                    <path d="M50 75 Q 35 70 30 60 Q 45 65 50 75" fill="#2ECC71" stroke="#1E1E1E" stroke-width="1.5"/>
+                    <circle class="petal-svg" cx="50" cy="22" r="12" fill="#FFB7B2" stroke="#1E1E1E" stroke-width="2"/>
+                    <circle class="petal-svg" cx="74" cy="36" r="12" fill="#FFB7B2" stroke="#1E1E1E" stroke-width="2"/>
+                    <circle class="petal-svg" cx="74" cy="64" r="12" fill="#FFB7B2" stroke="#1E1E1E" stroke-width="2"/>
+                    <circle class="petal-svg" cx="50" cy="78" r="12" fill="#FFB7B2" stroke="#1E1E1E" stroke-width="2"/>
+                    <circle class="petal-svg" cx="26" cy="64" r="12" fill="#FFB7B2" stroke="#1E1E1E" stroke-width="2"/>
+                    <circle class="petal-svg" cx="26" cy="36" r="12" fill="#FFB7B2" stroke="#1E1E1E" stroke-width="2"/>
+                    <circle cx="50" cy="50" r="15" fill="#FFDAC1" stroke="#1E1E1E" stroke-width="2.5"/>
+                </svg>
+            </div>
+
+            <!-- Slots das Letras -->
+            <div id="flower-slots" class="flex flex-wrap gap-1.5 sm:gap-2 justify-center my-3"></div>
+
+            <!-- Teclado Virtual -->
+            <div id="flower-keyboard" class="flex flex-wrap gap-1 justify-center max-w-xl my-2"></div>
+
+            <div class="flex gap-3 mt-3">
+                <button onclick="initFlowerGame()" class="doodle-btn bg-[#FFDAC1] px-5 py-2.5 text-base">Próxima Palavra 🔄</button>
+                <button onclick="switchStep(8)" class="doodle-btn bg-[#FFB7B2] px-5 py-2.5 text-base font-bold">Ir para Caça-Palavras ➡️</button>
+            </div>
+        </div>
+
+        <!-- ETAPA 8: CAÇA-PALAVRAS INTERATIVO -->
+        <div id="step-8" class="step-container w-full bg-white doodle-box p-4 sm:p-6 flex flex-col items-center hidden">
+            
+            <div class="inline-block bg-[#B5EAD7] border-[3.5px] border-[#1E1E1E] px-8 py-2.5 rounded-full shadow-[4px_4px_0px_#1E1E1E] mb-4">
+                <h2 class="text-xl sm:text-2xl font-black text-[#1E1E1E] tracking-wide text-center">
+                    Jogo 8: Caça-Palavras da Pontuação
+                </h2>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-6 font-bold text-sm">
+                <span class="text-[#1E1E1E] font-extrabold mr-1">Nível:</span>
+                <button id="ws-diff-easy" onclick="setWordSearchDifficulty('easy')" class="doodle-btn px-4 py-1.5 rounded-full text-xs sm:text-sm bg-[#FFB7B2] text-[#1E1E1E]">
+                    Fácil (1 Sentido)
+                </button>
+                <button id="ws-diff-hard" onclick="setWordSearchDifficulty('hard')" class="doodle-btn px-4 py-1.5 rounded-full text-xs sm:text-sm bg-white text-[#1E1E1E]">
+                    Difícil (Todos os Sentidos)
+                </button>
+            </div>
+
+            <div class="w-full flex flex-col md:flex-row gap-6 items-center md:items-start justify-center">
+                
+                <div class="bg-[#1E1E1E] p-3 sm:p-4 rounded-[22px] shadow-[6px_6px_0px_rgba(0,0,0,0.15)] max-w-md w-full">
+                    <div id="ws-grid-container" class="ws-grid w-full"></div>
+                </div>
+
+                <div class="w-full md:w-64 bg-white border-[3.5px] border-[#1E1E1E] p-5 rounded-[20px] shadow-[5px_5px_0px_#1E1E1E]">
+                    <h3 class="text-base font-black text-[#1E1E1E] border-b-2 border-[#1E1E1E] pb-2 mb-3">
+                        Encontre as <span id="ws-total-words-count">5</span> palavras:
+                    </h3>
+                    <div class="flex flex-col gap-2 font-bold text-sm sm:text-base" id="ws-words-list">
+                        <div id="word-item-INTERROGACAO" class="word-item">
+                            <span class="word-text">• INTERROGAÇÃO</span>
+                            <span class="check-icon hidden text-base">✅</span>
+                        </div>
+                        <div id="word-item-EXCLAMACAO" class="word-item">
+                            <span class="word-text">• EXCLAMAÇÃO</span>
+                            <span class="check-icon hidden text-base">✅</span>
+                        </div>
+                        <div id="word-item-PERGUNTA" class="word-item">
+                            <span class="word-text">• PERGUNTA</span>
+                            <span class="check-icon hidden text-base">✅</span>
+                        </div>
+                        <div id="word-item-PONTO" class="word-item">
+                            <span class="word-text">• PONTO</span>
+                            <span class="check-icon hidden text-base">✅</span>
+                        </div>
+                        <div id="word-item-FRASE" class="word-item">
+                            <span class="word-text">• FRASE</span>
+                            <span class="check-icon hidden text-base">✅</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-3 mt-6">
+                <button onclick="initWordSearch()" class="doodle-btn bg-[#FFDAC1] px-5 py-2 text-sm sm:text-base flex items-center gap-1.5">
+                    🔄 Novo Caça-Palavras
+                </button>
+                <button onclick="switchStep(1)" class="doodle-btn bg-[#A2D2FF] px-5 py-2 text-sm sm:text-base flex items-center gap-1.5">
+                    🏠 Voltar ao Início
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- MODAL DE PARABÉNS DA VITÓRIA DO CAÇA-PALAVRAS -->
+    <div id="victoryModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 hidden">
+        <div class="bg-[#FFF8E7] border-4 border-[#1E1E1E] rounded-3xl p-6 sm:p-8 max-w-md w-full text-center shadow-[10px_10px_0px_#1E1E1E] transform animate-bounce-short">
+            <div class="text-6xl mb-3">🏆</div>
+            <h2 class="text-2xl sm:text-3xl font-black text-[#1E1E1E] mb-2 uppercase tracking-wide">
+                Sensacional!
+            </h2>
+            <p class="text-lg font-bold text-gray-800 mb-4">
+                Você encontrou todas as 5 palavras da pontuação no Caça-Palavras!
+            </p>
+            <div class="bg-[#B5EAD7] border-2 border-[#1E1E1E] rounded-2xl p-3 font-extrabold text-base mb-6 shadow-[3px_3px_0px_#1E1E1E]">
+                ⭐ Mestre da Escrita e Pontuação ⭐
+            </div>
+            <div class="flex flex-col gap-3">
+                <button onclick="closeVictoryModal(); initWordSearch();" class="doodle-btn bg-[#FFE066] px-6 py-3 text-lg font-black">
+                    Jogar Novamente 🔄
+                </button>
+                <button onclick="closeVictoryModal(); switchStep(1);" class="doodle-btn bg-[#A2D2FF] px-6 py-3 text-base">
+                    Voltar ao Início da Trilha 🏠
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lógica de navegação e de todos os jogos -->
+    <script src="script.js"></script>
+</body>
+</html>
